@@ -1,4 +1,4 @@
-CLUSTER_NAME ?= hasura-demo
+CLUSTER_NAME ?= hasura
 
 bootstrap: cluster config metrics secrets deploy
 
@@ -17,9 +17,10 @@ metrics:
 
 remove:
 	kubectl delete -f kube-state-metrics/examples/standard/
-	kubectl delete secrets hasura-db-url
+	rm -rf kube-state-metrics
+	kubectl delete secrets ${CLUSTER_NAME}-secrets
 	kubectl delete -f manifest.yaml
 	doctl kubernetes cluster delete ${CLUSTER_NAME}
 
 secrets:
-	kubectl create secret generic hasura-db-url --from-file=./.env
+	kubectl create secret generic ${CLUSTER_NAME}-secrets --from-file=./.env
