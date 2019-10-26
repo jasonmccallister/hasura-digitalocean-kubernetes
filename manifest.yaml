@@ -12,10 +12,6 @@ spec:
       protocol: TCP
       port: 80
       targetPort: 8080
-    - name: http
-      protocol: TCP
-      port: 443
-      targetPort: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -42,7 +38,10 @@ spec:
         name: hasura
         env:
         - name: HASURA_GRAPHQL_DATABASE_URL
-          value: postgres://username:password@hostname:port/dbname
+          valueFrom:
+            secretKeyRef:
+              name: hasura-db-url
+              key: hasura-db-url
         - name: HASURA_GRAPHQL_ENABLE_CONSOLE
           value: "true"
         ports:
