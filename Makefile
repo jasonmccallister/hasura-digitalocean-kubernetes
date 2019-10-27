@@ -17,7 +17,6 @@ metrics:
 
 remove:
 	kubectl delete -f kube-state-metrics/examples/standard/
-	kubectl delete -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta4/aio/deploy/recommended.yaml
 	rm -rf kube-state-metrics
 	kubectl delete -f secrets.yaml
 	kubectl delete -f manifest.yaml
